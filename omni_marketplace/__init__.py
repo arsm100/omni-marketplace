@@ -21,7 +21,7 @@ login_manager.init_app(app)
 login_manager.login_view = "sessions.sign_in"
 
 # import user model so that you can run migration
-# from omni_marketplace.users.model import User
+from omni_marketplace.users.model import User
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -34,7 +34,7 @@ def load_user(user_id):
 @app.route("/")
 def home():
     if current_user.is_authenticated:
-        return redirect(url_for('home', id=current_user.id))
+        return render_template('home.html', id = current_user.id)
     else:
         return render_template('home.html')
 
@@ -43,6 +43,7 @@ def home():
 # make sure route and method is defined in views.py
 from omni_marketplace.users.views import users_blueprint
 from omni_marketplace.sessions.views import sessions_blueprint
+
 app.register_blueprint(users_blueprint, url_prefix="/users")
 app.register_blueprint(sessions_blueprint, url_prefix='/')
 

@@ -10,6 +10,8 @@ Home
 
 <div class="container">
   <h1>Welcome to the one and only store</h1>
+
+{{current_user.first_name}}
 {% if current_user.is_authenticated %}
 <h1>Great job, you signed up, {{current_user.first_name}}.Now What?! ...</h1>
 {% else %}
