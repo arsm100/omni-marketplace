@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from omni_marketplace import db, app
 from omni_marketplace.helpers.helpers import validation_preparation
+import re
 
 
 class User(db.Model, UserMixin):
@@ -20,12 +21,11 @@ class User(db.Model, UserMixin):
     description = db.Column(db.Text)
     company_logo = db.Column(db.String())
 
-    def __init__(self, email, first_name, last_name, store_name, password):
-        self.validation_errors = []
-        self.email = email
+    def __init__(self, store_name, first_name, last_name, email, password):
+        self.store_name = store_name
         self.first_name = first_name
         self.last_name = last_name
-        self.store_name = username
+        self.email = email
         self.set_password(password)
 
     def __repr__(self):

@@ -11,7 +11,7 @@ User Sign-up
 </div>
 {% endfor %}
 
-
+<div class="container">
 <p>Please fill your information:</p>
 
 <form action="{{ url_for('users.create') }}" method="POST">
@@ -46,4 +46,5 @@ User Sign-up
 
 
 </form>
+</div>
 {% endblock %}

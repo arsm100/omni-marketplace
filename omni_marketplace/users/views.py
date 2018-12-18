@@ -22,8 +22,7 @@ def new():
 def create():
     form = SignupForm()
     if form.validate_on_submit():
-        new_user = User(form.email.data.lower(), form.first_name.data, form.last_name.data,
-                        form.store_name.data, form.password.data)
+        new_user = User(form.store_name.data, form.first_name.data, form.last_name.data, form.email.data.lower(), form.password.data)
         if len(new_user.validation_errors) == 0:
             db.session.add(new_user)
             db.session.commit()
