@@ -4,17 +4,19 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from omni_marketplace import db, app
-from omni_marketplace.helpers.helpers import validation_preparation 
+from omni_marketplace.helpers.helpers import validation_preparation
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key = True)
-    store_name = db.Column(db.String(64), index = True, unique = True, nullable = False)
-    first_name = db.Column(db.String(64), index = True,nullable = False)
-    last_name = db.Column(db.String(64), index = True, nullable = False)
-    email = db.Column(db.String(120), index = True, unique = True, nullable = False)
-    password_hash = db.Column(db.String(), nullable = False)
+    id = db.Column(db.Integer, primary_key=True)
+    store_name = db.Column(db.String(64), index=True,
+                           unique=True, nullable=False)
+    first_name = db.Column(db.String(64), index=True, nullable=False)
+    last_name = db.Column(db.String(64), index=True, nullable=False)
+    email = db.Column(db.String(120), index=True, unique=True, nullable=False)
+    password_hash = db.Column(db.String(), nullable=False)
     description = db.Column(db.Text)
     company_logo = db.Column(db.String())
 
