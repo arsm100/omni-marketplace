@@ -1,4 +1,3 @@
-from omni_marketplace.users.model import User
 import os
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_migrate import Migrate
@@ -22,7 +21,7 @@ login_manager.init_app(app)
 login_manager.login_view = "sessions.sign_in"
 
 # import user model so that you can run migration
-
+# from omni_marketplace.users.model import User
 
 @login_manager.user_loader
 def load_user(user_id):
