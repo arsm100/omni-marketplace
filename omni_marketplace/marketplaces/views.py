@@ -1,0 +1,1 @@
+from omni_marketplace.marketplaces.model import Marketplace
