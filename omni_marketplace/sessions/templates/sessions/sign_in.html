@@ -1,14 +1,14 @@
 
 {% extends "_base.html" %}
 {% block title %}
-User Sign-up
+User Login
 {% endblock %}
 {% block content %}
 
 <div class="container">
 <p>Login</p>
 
-<form action="{{ url_for('sessions.attempt_sign_in') }}" method="POST">
+<form action="{{ url_for('sessions.authenticate', next = request.args.get('next')) }}" method="POST">
   {{ form.csrf_token }}
 
   <div class="form-group">
@@ -24,7 +24,7 @@ User Sign-up
   <br>
   OR
   <br>
-  <a href="" class="btn btn-primary">Sign in with google!</a>
+  <a href="{{ url_for('sessions.google_authorize') }}" class="btn btn-primary">Sign in with google!</a>
 
 
 </form>
