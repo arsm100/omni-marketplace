@@ -1,3 +1,4 @@
+import re
 from sqlalchemy import event
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -22,10 +23,10 @@ class User(db.Model, UserMixin):
     company_logo = db.Column(db.String())
 
     def __init__(self, store_name, first_name, last_name, email, password):
-        self.store_name = store_name
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
+        self.store_name = store_name
         self.set_password(password)
 
     def __repr__(self):
