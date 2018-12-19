@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200,400" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
   <title>
     {% block title %}
@@ -19,9 +22,6 @@
   <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
 
-  <!-- favicon -->
-  <!-- <link rel="shortcut icon" href="./../../../static/images/favicon.ico" type="image/x-icon"> -->
-
   {% block custom_head %}
   {% endblock %}
 </head>
@@ -29,14 +29,14 @@
 <body>
 
   {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  {% for message in messages %}
-  <div class="alert alert-info fade show alert-dismissible">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-    {{message}}
-  </div>
-  {% endfor %}
-  {% endif %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-info fade show alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+          {{message}}
+        </div>
+      {% endfor %}
+    {% endif %}
   {% endwith %}
 
   {% block content %}
