@@ -24,8 +24,10 @@ login_manager.session_protection = "basic"
 login_manager.login_message = "Please login to Omni-marketplace first"
 
 
-# import user model so that you can run migration
+# import user & marketplace models so that you can run migration
 from omni_marketplace.users.model import User
+from omni_marketplace.marketplaces.model import Marketplace
+
 
 @login_manager.user_loader
 def load_user(user_id):
