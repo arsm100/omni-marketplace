@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_assets import Bundle, Environment
+from authlib.flask.client import OAuth
 
 import config
 
@@ -18,7 +19,10 @@ Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "sessions.sign_in"
+login_manager.login_view = "sessions.new"
+login_manager.session_protection = "basic"
+login_manager.login_message = "Please login to Omni-marketplace first"
+
 
 # import user model so that you can run migration
 from omni_marketplace.users.model import User
@@ -29,6 +33,33 @@ def load_user(user_id):
         return User.query.get(user_id)
     except:
         return None
+
+
+# google oauth setup
+config = eval((os.environ['APP_SETTINGS']))
+oauth = OAuth()
+REDIRECT_URI = os.environ['REDIRECT_URI']
+
+google = oauth.register('google',
+                        client_id=config.GOOGLE_CLIENT_ID,
+                        client_secret=config.GOOGLE_CLIENT_SECRET,
+                        access_token_url='https://accounts.google.com/o/oauth2/token',
+                        access_token_params=None,
+                        refresh_token_url=None,
+                        authorize_url='https://accounts.google.com/o/oauth2/auth',
+                        api_base_url='https://www.googleapis.com/oauth2/v1/',
+                        client_kwargs={
+                            'scope': 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+                            'token_endpoint_auth_method': 'client_secret_basic',
+                            'token_placement': 'header',
+                            'prompt': 'consent'
+                        }
+                        )
+
+oauth.init_app(app)
+
+
+
 
 # Home Page
 @app.route("/")

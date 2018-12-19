@@ -26,6 +26,8 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    GOOGLE_CLIENT_ID = os.environ['GOOGLE_CLIENT_ID']
+    GOOGLE_CLIENT_SECRET = os.environ['GOOGLE_CLIENT_SECRET']
 
 
 class TestingConfig(Config):
