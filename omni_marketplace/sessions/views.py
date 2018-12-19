@@ -81,7 +81,3 @@ def google_authorize_login():
         flash('Please create a password for your Omni-marketplace account from the Settings tab')
         # send_signup_email(new_user.email)
         return redirect(url_for('home'))  # change redirect destination later
-
-
-
-
