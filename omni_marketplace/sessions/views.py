@@ -59,7 +59,6 @@ def google_authorize_login():
         login_user(user)
         return redirect(url_for('home'))  # change redirect destination later
     else:
-        flash('we\'re creating an account for you with us using your google account!')
         email = oauth.google.get(
             'https://www.googleapis.com/oauth2/v2/userinfo').json()['email']
         given_name = oauth.google.get(
