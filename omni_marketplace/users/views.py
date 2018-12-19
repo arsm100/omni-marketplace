@@ -11,8 +11,8 @@ users_blueprint = Blueprint('users',
 @users_blueprint.route("/new", methods=['GET'])
 def new():
     if current_user.is_authenticated:
-        flash('You are logged in!!')
-        return redirect(url_for('home'))
+        flash('You are already logged in!!')
+        return redirect(url_for('home'))  # change redirect destination later
     else:
         form = SignupForm()
         return render_template('users/new.html', form=form)
@@ -23,18 +23,18 @@ def create():
     form = SignupForm(request.form)
 
     new_user = User(
-        store_name = form.store_name.data, 
-        first_name = form.first_name.data, 
-        last_name = form.last_name.data, 
-        email = form.email.data.lower(), 
-        password = form.password.data
+        store_name=form.store_name.data,
+        first_name=form.first_name.data,
+        last_name=form.last_name.data,
+        email=form.email.data.lower(),
+        password=form.password.data
     )
-    
+
     if len(new_user.validation_errors) > 0:
         return render_template('users/new.html', validation_errors=new_user.validation_errors, form=form)
     else:
         db.session.add(new_user)
         db.session.commit()
-        login_user(new_user)
+        login_user(new_user, remember=False)
         flash('Account created successfully')
-        return redirect(url_for('home', id=current_user.id))
+        return redirect(url_for('home', id=current_user.id))  # change redirect destination later

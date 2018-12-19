@@ -32,6 +32,22 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"{self.store_name} with email {self.email} saved to database!"
 
+    @validates('first_name')
+    @validation_preparation
+    def validate_first_name(self, key, first_name):
+        if not first_name:
+            self.validation_errors.append('No First Name provided')
+
+        return first_name
+
+    @validates('last_name')
+    @validation_preparation
+    def validate_last_name(self, key, last_name):
+        if not last_name:
+            self.validation_errors.append('No Last Name provided')
+
+        return last_name
+
     @validates('store_name')
     @validation_preparation
     def validate_store_name(self, key, store_name):
@@ -42,7 +58,7 @@ class User(db.Model, UserMixin):
             if User.query.filter_by(store_name=store_name).first():
                 self.validation_errors.append('Store Name is already in use')
 
-        if len(store_name) < 3 or len(store_name) > 50:
+        if len(store_name) > 0 and (len(store_name) < 3 or len(store_name) > 50):
             self.validation_errors.append(
                 'Store Name must be between 3 and 50 characters')
 
@@ -68,7 +84,7 @@ class User(db.Model, UserMixin):
         if not password:
             self.validation_errors.append('Password not provided')
 
-        if len(password) < 8 or len(password) > 50:
+        if len(password) > 0 and (len(password) < 8 or len(password) > 50):
             self.validation_errors.append(
                 'Password must be between 8 and 50 characters')
 
