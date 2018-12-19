@@ -16,6 +16,7 @@ Home
 <h1>Great job, you signed up, {{current_user.first_name}}.Now What?! ...</h1>
 {% else %}
   <a href="{{ url_for('users.new') }}" class="btn btn-primary">Sign up!</a>
+  <a href="{{ url_for('sessions.index') }}" class="btn btn-primary">Sign in!</a>
 {% endif %}
 </div>
 
