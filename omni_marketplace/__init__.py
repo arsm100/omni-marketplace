@@ -65,6 +65,11 @@ app.config['S3_BUCKET'] = S3_BUCKET
 app.config['S3_KEY'] = S3_KEY
 app.config['S3_SECRET'] = S3_SECRET
 
+# SSL setup for development
+# import ssl
+# context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+# context.load_cert_chain('localhost.crt', 'localhost.key')
+
 # Home Page
 @app.route("/")
 def home():
@@ -79,10 +84,12 @@ def home():
 from omni_marketplace.users.views import users_blueprint
 from omni_marketplace.sessions.views import sessions_blueprint
 from omni_marketplace.images.views import images_blueprint
+from omni_marketplace.marketplaces.views import marketplaces_blueprint
 
 app.register_blueprint(users_blueprint, url_prefix="/users")
 app.register_blueprint(sessions_blueprint, url_prefix='/')
 app.register_blueprint(images_blueprint, url_prefix='/images')
+app.register_blueprint(marketplaces_blueprint, url_prefix='/marketplaces')
 
 
 # Flask_Assets

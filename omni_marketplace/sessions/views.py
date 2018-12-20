@@ -58,6 +58,7 @@ def google_authorize_login():
     user = User.query.filter_by(email=email).first()
     if user:
         login_user(user)
+        flash('logged in successfully')
         return redirect(url_for('home'))  # change redirect destination later
     else:
         email = oauth.google.get(
