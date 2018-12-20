@@ -45,6 +45,7 @@ def upload(id):
 
         # check correct extension and upload if valid
         if file and allowed_file(file.filename):
+            file.seek(0)
             serial_filename = f'{current_user.id}.{random.randint(1,100000)}.{file.filename}'
             file.filename = secure_filename(serial_filename)
             upload_image(file)
