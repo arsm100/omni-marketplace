@@ -28,7 +28,8 @@ def authenticate():
         login_user(user, remember=False)
         flash('Logged in successfully')
         next = request.args.get('next')
-        return redirect(next or url_for('home'))  # change redirect destination later
+        # change redirect destination later
+        return redirect(next or url_for('home'))
 
     else:
         flash('Wrong Email/Password')

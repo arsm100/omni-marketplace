@@ -22,4 +22,4 @@ class Marketplace(db.Model):
         self.shop_name = shop_name
 
     def __repr__(self):
-        return f"{self.shop_name} with id {self.shop_id} belonging to user user {self.user_id} saved to database!"
+        return f"{self.shop_name} with id {self.shop_id} belonging to user {self.user_id} saved to database!"
