@@ -24,11 +24,6 @@ login_manager.session_protection = "basic"
 login_manager.login_message = "Please login to Omni-marketplace first"
 
 
-# import user & marketplace models so that you can run migration
-from omni_marketplace.users.model import User
-from omni_marketplace.marketplaces.model import Marketplace
-
-
 @login_manager.user_loader
 def load_user(user_id):
     try:
@@ -60,8 +55,15 @@ google = oauth.register('google',
 
 oauth.init_app(app)
 
+# S3 initialisation and upload setup
+S3_BUCKET = config.S3_BUCKET
+S3_LOCATION = f'http://{S3_BUCKET}.s3.amazonaws.com/'
+S3_KEY = config.S3_KEY
+S3_SECRET = config.S3_SECRET
 
-
+app.config['S3_BUCKET'] = S3_BUCKET
+app.config['S3_KEY'] = S3_KEY
+app.config['S3_SECRET'] = S3_SECRET
 
 # Home Page
 @app.route("/")
@@ -76,9 +78,11 @@ def home():
 # make sure route and method is defined in views.py
 from omni_marketplace.users.views import users_blueprint
 from omni_marketplace.sessions.views import sessions_blueprint
+from omni_marketplace.images.views import images_blueprint
 
 app.register_blueprint(users_blueprint, url_prefix="/users")
 app.register_blueprint(sessions_blueprint, url_prefix='/')
+app.register_blueprint(images_blueprint, url_prefix='/images')
 
 
 # Flask_Assets
@@ -91,3 +95,8 @@ css = Bundle('css/vendor/bootstrap_4.1.1.css', 'css/style.css',
              filters='cssmin', output='gen/packed.%(version)s.css')
 
 assets.register({'js_all': js, 'css_all': css})
+
+# import user, image & marketplace models so that you can run migration
+from omni_marketplace.users.model import User
+from omni_marketplace.marketplaces.model import Marketplace
+from omni_marketplace.images.model import Image
