@@ -65,10 +65,9 @@ app.config['S3_BUCKET'] = S3_BUCKET
 app.config['S3_KEY'] = S3_KEY
 app.config['S3_SECRET'] = S3_SECRET
 
-# SSL setup for development
-# import ssl
-# context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-# context.load_cert_chain('localhost.crt', 'localhost.key')
+# Lazada app keys
+LAZADA_TEST_KEY = config.LAZADA_TEST_KEY
+LAZADA_TEST_SECRET = config.LAZADA_TEST_SECRET
 
 # Home Page
 @app.route("/")
