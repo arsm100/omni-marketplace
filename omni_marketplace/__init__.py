@@ -32,10 +32,11 @@ def load_user(user_id):
         return None
 
 
-# google oauth setup
+# google & lazada oauth setup
 config = eval((os.environ['APP_SETTINGS']))
 oauth = OAuth()
-REDIRECT_URI = os.environ['REDIRECT_URI']
+GOOGLE_REDIRECT_URI = os.environ['GOOGLE_REDIRECT_URI']
+LAZADA_REDIRECT_URI = os.environ['LAZADA_REDIRECT_URI']
 
 google = oauth.register('google',
                         client_id=config.GOOGLE_CLIENT_ID,
@@ -47,6 +48,21 @@ google = oauth.register('google',
                         api_base_url='https://www.googleapis.com/oauth2/v1/',
                         client_kwargs={
                             'scope': 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+                            'token_endpoint_auth_method': 'client_secret_basic',
+                            'token_placement': 'header',
+                            'prompt': 'consent'
+                        }
+                        )
+
+lazada = oauth.register('lazada',
+                        client_id=config.LAZADA_TEST_KEY,
+                        access_token_url='',
+                        access_token_params=None,
+                        refresh_token_url=None,
+                        authorize_url='https://auth.lazada.com/oauth/authorize',
+                        api_base_url='',
+                        client_kwargs={
+                            'scope': '',
                             'token_endpoint_auth_method': 'client_secret_basic',
                             'token_placement': 'header',
                             'prompt': 'consent'

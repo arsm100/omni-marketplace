@@ -2,7 +2,7 @@ from omni_marketplace.users.model import User
 from omni_marketplace.sessions.forms import LogInForm
 from flask_login import login_user, current_user, login_required, logout_user
 from flask import redirect, url_for, render_template, Blueprint, flash, request
-from omni_marketplace import oauth, google, REDIRECT_URI, db
+from omni_marketplace import oauth, google, GOOGLE_REDIRECT_URI, db
 import random
 
 sessions_blueprint = Blueprint(
@@ -46,7 +46,7 @@ def logout():
 
 @sessions_blueprint.route('/check/google')
 def google_authorize():
-    redirect_uri = url_for(REDIRECT_URI, _external=True)
+    redirect_uri = url_for(GOOGLE_REDIRECT_URI, _external=True)
     return google.authorize_redirect(redirect_uri)
 
 

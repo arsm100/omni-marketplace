@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(), nullable=False)
     description = db.Column(db.Text)
     company_logo = db.Column(db.String())
-    marketplaces = db.relationship("Marketplace", backref="users", lazy=False, cascade="delete, delete-orphan")
+    marketplaces = db.relationship("Marketplace", backref="users", cascade="delete, delete-orphan")
 
     def __init__(self, store_name, first_name, last_name, email, password):
         self.first_name = first_name
