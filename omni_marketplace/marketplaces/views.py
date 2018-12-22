@@ -32,10 +32,20 @@ def lazada_authorize_login():
     response = client.execute(api_request)
     access_token = response.body.get('access_token')
     refresh_token = response.body.get('refresh_token')
-    email = response.body.get('account')
     seller_id = response.body.get('country_user_info')[0].get('seller_id')
-    print(response)
-    print(response.type)
+    short_code = response.body.get('country_user_info')[0].get('short_code')
+    # email = response.body.get('account')
     print(response.body)
-    import pdb; pdb.set_trace()
-    return redirect(url_for('home', lazada=True))  # change redirect destination later
+
+    new_marketplace = Marketplace(
+        user_id=current_user.id,
+        shop_id=seller_id,
+        shop_name=short_code,
+        access_token=access_token,
+        refresh_token=refresh_token
+    )
+
+    db.session.add(new_marketplace)
+    db.session.commit()
+    flash('Lazada has been added to your omni-marketplace!')
+    return redirect(url_for('home'))  # change redirect destination later

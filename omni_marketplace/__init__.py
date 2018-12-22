@@ -56,11 +56,7 @@ google = oauth.register('google',
 
 lazada = oauth.register('lazada',
                         client_id=config.LAZADA_TEST_KEY,
-                        access_token_url='',
-                        access_token_params=None,
-                        refresh_token_url=None,
                         authorize_url='https://auth.lazada.com/oauth/authorize',
-                        api_base_url='',
                         client_kwargs={
                             'scope': '',
                             'token_endpoint_auth_method': 'client_secret_basic',
@@ -68,6 +64,11 @@ lazada = oauth.register('lazada',
                             'prompt': 'consent'
                         }
                         )
+#                       EXAMPLE_CLIENT_KWARGS = {
+#     'signature_method': 'HMAC-SHA1',
+#     'signature_type': 'HEADER',
+#     'rsa_key': 'Your-RSA-Key'
+# }
 
 oauth.init_app(app)
 
