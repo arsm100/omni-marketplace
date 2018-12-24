@@ -17,16 +17,18 @@ marketplaces_blueprint = Blueprint(
 # print(response.type)
 # print(response.body)
 
+
 @marketplaces_blueprint.route('/check/lazada')
 @login_required
 def lazada_authorize():
-    return lazada.authorize_redirect(LAZADA_REDIRECT_URI, _external= True)
+    return lazada.authorize_redirect(LAZADA_REDIRECT_URI, _external=True)
 
 
 @marketplaces_blueprint.route('/authorize/lazada')
 def lazada_authorize_login():
     code = request.args.get('code')
-    client = LazopClient("https://auth.lazada.com/rest", LAZADA_TEST_KEY, LAZADA_TEST_SECRET)
+    client = LazopClient("https://auth.lazada.com/rest",
+                         LAZADA_TEST_KEY, LAZADA_TEST_SECRET)
     api_request = LazopRequest("/auth/token/create")
     api_request.add_api_param("code", code)
     response = client.execute(api_request)
@@ -39,6 +41,7 @@ def lazada_authorize_login():
 
     new_marketplace = Marketplace(
         user_id=current_user.id,
+        marketplace_name="lazada",
         shop_id=seller_id,
         shop_name=short_code,
         access_token=access_token,
