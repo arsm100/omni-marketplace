@@ -32,10 +32,11 @@ def load_user(user_id):
         return None
 
 
-# google oauth setup
+# google & lazada oauth setup
 config = eval((os.environ['APP_SETTINGS']))
 oauth = OAuth()
-REDIRECT_URI = os.environ['REDIRECT_URI']
+GOOGLE_REDIRECT_URI = os.environ['GOOGLE_REDIRECT_URI']
+LAZADA_REDIRECT_URI = os.environ['LAZADA_REDIRECT_URI']
 
 google = oauth.register('google',
                         client_id=config.GOOGLE_CLIENT_ID,
@@ -53,6 +54,22 @@ google = oauth.register('google',
                         }
                         )
 
+lazada = oauth.register('lazada',
+                        client_id=config.LAZADA_TEST_KEY,
+                        authorize_url='https://auth.lazada.com/oauth/authorize',
+                        client_kwargs={
+                            'scope': '',
+                            'token_endpoint_auth_method': 'client_secret_basic',
+                            'token_placement': 'header',
+                            'prompt': 'consent'
+                        }
+                        )
+#                       EXAMPLE_CLIENT_KWARGS = {
+#     'signature_method': 'HMAC-SHA1',
+#     'signature_type': 'HEADER',
+#     'rsa_key': 'Your-RSA-Key'
+# }
+
 oauth.init_app(app)
 
 # S3 initialisation and upload setup
@@ -64,6 +81,10 @@ S3_SECRET = config.S3_SECRET
 app.config['S3_BUCKET'] = S3_BUCKET
 app.config['S3_KEY'] = S3_KEY
 app.config['S3_SECRET'] = S3_SECRET
+
+# Lazada app keys
+LAZADA_TEST_KEY = config.LAZADA_TEST_KEY
+LAZADA_TEST_SECRET = config.LAZADA_TEST_SECRET
 
 # Home Page
 @app.route("/")
@@ -79,10 +100,12 @@ def home():
 from omni_marketplace.users.views import users_blueprint
 from omni_marketplace.sessions.views import sessions_blueprint
 from omni_marketplace.images.views import images_blueprint
+from omni_marketplace.marketplaces.views import marketplaces_blueprint
 
 app.register_blueprint(users_blueprint, url_prefix="/users")
 app.register_blueprint(sessions_blueprint, url_prefix='/')
 app.register_blueprint(images_blueprint, url_prefix='/images')
+app.register_blueprint(marketplaces_blueprint, url_prefix='/marketplaces')
 
 
 # Flask_Assets

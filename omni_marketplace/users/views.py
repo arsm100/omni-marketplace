@@ -1,12 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, escape, sessions
 from omni_marketplace.users.forms import SignupForm
-from omni_marketplace.users.model import User
+from omni_marketplace.users.model import User, db
+from omni_marketplace.marketplaces.model import Marketplace
 from flask_login import login_user, logout_user, login_required, login_url, current_user
-from omni_marketplace import db
 
 users_blueprint = Blueprint('users',
                             __name__,
                             template_folder='templates')
+
 
 @users_blueprint.route("/new", methods=['GET'])
 def new():
@@ -37,4 +38,11 @@ def create():
         db.session.commit()
         login_user(new_user)
         flash('Account created successfully')
-        return redirect(url_for('home', id=current_user.id))  # change redirect destination later
+        # change redirect destination later
+        return redirect(url_for('home', id=current_user.id))
+
+
+@users_blueprint.route("<id>/dashboard", methods=['GET'])
+@login_required
+def dashboard(id):
+    return render_template("users/dashboard.html", Marketplace=Marketplace)

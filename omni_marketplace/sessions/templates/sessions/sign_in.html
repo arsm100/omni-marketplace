@@ -1,6 +1,7 @@
 {% extends "_base.html" %}
 
 {% block title %}
+User Sign-in
 {% endblock %}
 
 
@@ -18,7 +19,7 @@
       <div class="col-md-5 h-100 d-flex align-items-start flex-column" id="login-right-banner">
         <div class="mb-auto m-5">
           <h1>Login</h1>
-          <p>Hello! Let's get started</p>
+          <p>Hello! Let's get started!</p>
         </div>
         <form class="mb-auto w-100 p-5" action="{{ url_for('sessions.authenticate', next = request.args.get('next')) }}"
           method="POST">
@@ -39,9 +40,8 @@
           </div>
         </form>
         <div class="mt-auto mx-auto mb-3">
-          <small class="text-muted">Don't have an account, sign up
-            <a class="text-muted border-bottom" href="{{url_for('users.new')}}">here</a>
-            !
+          <small class="text-muted">
+            <a class="text-muted border-bottom" href="{{url_for('users.new')}}">Don't have an account yet? Sign up here!</a>
           </small>
         </div>
       </div>
